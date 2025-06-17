@@ -14,12 +14,8 @@ class TodoBase(BaseModel):
     todo_name: str = Field(..., min_length=3, max_length=512, description='Name of the todo')
     todo_description: str = Field(..., description='Description of todo')
     priority: Priority = Field(default=Priority.LOW, description='Priority of the todo')
-    
-class TodoCreate(TodoBase):
-    pass
 
-class Todo(TodoBase):
-    pass
+
 
 all_todos= [
     {'todo_id':1, 'todo_name': 'sports', 'todo_description': 'go to gym'},
