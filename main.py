@@ -16,7 +16,12 @@ class TodoBase(BaseModel):
     priority: Priority = Field(default=Priority.LOW, description='Priority of the todo')
 
 
-
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    age: int | None = None
+    
+    
 all_todos= [
     {'todo_id':1, 'todo_name': 'sports', 'todo_description': 'go to gym'},
     {'todo_id':2, 'todo_name': 'read', 'todo_description': 'read 10 pages'},
@@ -24,9 +29,18 @@ all_todos= [
     {'todo_id':4, 'todo_name': 'meditate', 'todo_description': 'exam study'},
     {'todo_id':5, 'todo_name': 'study', 'todo_description': 'meditate 20 minutes'},   
 ]
+
+class Product(BaseModel):
+    name: str = Field(min_length=3, max_length=50)
+    price: float = Field(gt=0)
+    
 @app.get('/')
 async def read_root():
     return {"message": "Hello world"}
+
+@app.post("/users/")
+def create_user(user: UserCreate): #checks incoming json against UserCreate
+    return {"message": "User created", "user": user.model_dump()}
 
 #path parameter
 @app.get('/todos/{todo_id}')
